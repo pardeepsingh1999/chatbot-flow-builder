@@ -10,38 +10,13 @@ import ReactFlow, {
   Position,
   ReactFlowProvider,
 } from "reactflow";
-
 import "reactflow/dist/style.css";
 import { Button, Col, Row } from "reactstrap";
+
 import NodePanel from "./NodePanel";
-import MessageNode from "./MessageNode";
 import { getNodeId, showToast } from "../helpers";
 import EditMessageCard from "./EditMessageCard";
-
-const initialNodes = [
-  {
-    id: "0",
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-    position: { x: 50, y: 150 },
-    type: "messageNode",
-    data: { value: "test message 1" },
-  },
-  {
-    id: "1",
-    sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-    position: { x: 550, y: 50 },
-    type: "messageNode",
-    data: { value: "test message 2" },
-  },
-];
-
-const initialEdges = [{ id: "e1-2", source: "0", target: "1" }];
-
-const nodeTypes = {
-  messageNode: MessageNode,
-};
+import { initialEdges, initialNodes, nodeTypes } from "../config";
 
 const ReactFlowComponent = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -52,6 +27,7 @@ const ReactFlowComponent = () => {
   const onConnect = useCallback(
     (params) => {
       if (params.source === params.target) {
+        // return if source and target are pointing to same node
         return;
       }
       setEdges((eds) => addEdge(params, eds));
@@ -60,6 +36,10 @@ const ReactFlowComponent = () => {
   );
 
   const _onSave = () => {
+    /**
+     * Check whether every node in the graph is connected
+     * either as a source or a target to at least one other node.
+     */
     const isEmptyTarget = nodes.some((each) => {
       if (
         !edges.find((e) => e.source === each.id) &&
@@ -70,6 +50,7 @@ const ReactFlowComponent = () => {
       return false;
     });
 
+    // If a node without any source or target connections is found, an error should be thrown
     if (isEmptyTarget) {
       showToast("Cannot save flow");
       return;
@@ -192,6 +173,7 @@ const ReactFlowComponent = () => {
             <Col sm="3" className="nodePanel m-0 p-0">
               {selectedNode?.id ? (
                 <>
+                  {/* When a node is selected, display the edit message card. */}
                   <EditMessageCard
                     selectedNode={selectedNode}
                     toggleSelectedNode={_toggleSelectedNode}

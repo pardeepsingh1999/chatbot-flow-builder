@@ -10,14 +10,8 @@ const CustomHandle = (props) => {
   const { nodeInternals, edges } = useStore(selector);
   const nodeId = useNodeId();
 
+  // custom permission controls whether the connection is enabled or disabled on either the source or target
   const isHandleConnectable = useMemo(() => {
-    if (typeof props.isConnectable === "function") {
-      const node = nodeInternals.get(nodeId);
-      const connectedEdges = getConnectedEdges([node], edges);
-
-      return props.isConnectable({ node, connectedEdges });
-    }
-
     if (typeof props.isConnectable === "number") {
       const node = nodeInternals.get(nodeId);
       const connectedEdges = getConnectedEdges([node], edges);
@@ -34,7 +28,7 @@ const CustomHandle = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeInternals, edges, nodeId, props.isConnectable]);
 
-  return <Handle {...props} isConnectable={isHandleConnectable}></Handle>;
+  return <Handle {...props} isConnectable={isHandleConnectable} />;
 };
 
 export default CustomHandle;
