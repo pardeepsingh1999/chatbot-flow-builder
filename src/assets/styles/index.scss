@@ -1,0 +1,98 @@
+$primary: #0d6efd;
+$grey: rgba(0, 0, 0, 0.1);
+$lightGrey: rgba(0, 0, 0, 0.05);
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.mainContainer {
+  min-height: 90vh;
+}
+
+.flex-fill {
+  flex: 1 1 auto;
+}
+
+.header,
+.footer {
+  background: $lightGrey;
+  padding: 10px;
+}
+
+.reactFlow {
+  height: 90vh;
+  // border: 1px solid gray;
+  // border-radius: 5px;
+}
+
+.nodePanel {
+  height: 90vh;
+  border-left: 1px solid $lightGrey;
+  // border-radius: 5px;
+}
+
+.dndflow {
+  margin: 10px;
+
+  .description {
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+
+  .dndnode {
+    border: 1px solid $primary;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: grab;
+
+    svg,
+    span {
+      color: $primary;
+    }
+  }
+}
+
+.messageNode {
+  min-width: 300px;
+  border-color: $lightGrey;
+  box-shadow: 0 0 10px 0 $grey;
+
+  &.selected {
+    border-color: $primary;
+  }
+
+  .card-header {
+    font-size: 12px;
+    background: #b0f1e3;
+    border-color: $lightGrey;
+
+    svg {
+      height: 18px;
+    }
+  }
+
+  .placeholder {
+    background: transparent;
+  }
+}
+
+.messageCardInput {
+  border-color: $lightGrey;
+  border-radius: 0;
+
+  label {
+    color: grey;
+  }
+
+  .card-header {
+    border-radius: 0;
+    font-size: 12px;
+    background: #b0f1e3;
+    border-color: $lightGrey;
+
+    svg {
+      height: 18px;
+    }
+  }
+}
